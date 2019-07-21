@@ -6,15 +6,31 @@ let cityName = document.getElementById("city-name");
 let icon = document.getElementById("icon");
 let temperature = document.getElementById("temp");
 let humidity = document.getElementById("humidity-div");
+let flag=0,v;
 
 if(searchButton){
     searchButton.addEventListener("click", findWeatherDetails);
 }
 
-console.log("a"+searchInput.value);
+//console.log("a"+searchInput.value);
 if(searchInput){
     searchInput.addEventListener("keyup", enterPressed);
     //console.log(searchInput.value());
+}
+
+if(temperature){
+  temperature.addEventListener("click",f);
+}
+
+function f(){
+  if(flag==0){
+    temperature.innerHTML = parseInt(v) + "°F";
+    flag=1;
+  }
+  else{
+    temperature.innerHTML = parseInt(v - 273) + "°C";
+    flag=0;
+  } 
 }
 
 function enterPressed(event){
@@ -38,7 +54,8 @@ function theResponse(response) {
   console.log(jsonObject);
   cityName.innerHTML = jsonObject.name;
   icon.src = "http://openweathermap.org/img/w/" + jsonObject.weather[0].icon + ".png";
-  temperature.innerHTML = parseInt(jsonObject.main.temp - 273) + "°";
+  temperature.innerHTML = parseInt(jsonObject.main.temp - 273) + "°C";
+  v = jsonObject.main.temp;
   humidity.innerHTML = jsonObject.main.humidity + "%";
 }
 
